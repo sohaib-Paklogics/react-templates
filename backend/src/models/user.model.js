@@ -1,63 +1,78 @@
-import mongoose, { Schema } from "mongoose";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import process from "process";
+// models/User.js
+import mongoose from "mongoose";
 
-const userSchema = new Schema(
+const UserSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
-      required: [true, "Please provide a name"],
+      required: true,
+      unique: true,
       trim: true,
+      minlength: 3,
+      maxlength: 50,
     },
     email: {
       type: String,
-      required: [true, "Please provide an email"],
+      required: true,
       unique: true,
       lowercase: true,
       trim: true,
     },
     password: {
       type: String,
-      required: [true, "Please provide a password"],
+      required: true,
       minlength: 6,
-      select: false,
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
+      enum: ["user", "premium", "banned"],
       default: "user",
     },
-    isVerified: {
+    status: {
+      type: String,
+      enum: ["active", "inactive", "suspended"],
+      default: "active",
+    },
+
+    lastLogin: {
+      type: Date,
+    },
+    loginHistory: [
+      {
+        type: Date,
+      },
+    ],
+
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
+    meta: {
+      type: Object,
+      default: {},
+    },
+
+    // 🔐 2FA-related fields
+    twoFactorEnabled: {
       type: Boolean,
       default: false,
     },
-    verificationToken: String,
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
+    twoFactorCode: {
+      type: String,
+    },
+    twoFactorCodeExpiresAt: {
+      type: Date,
+    },
+    twoFactorCodeUsed: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
   },
 );
 
-// Hash password before saving
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
-// Compare password method
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
-};
-
-// Generate JWT token
-userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_SECRET || "your-secret-key", { expiresIn: "1d" });
-};
-
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);
