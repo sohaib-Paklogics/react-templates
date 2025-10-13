@@ -16,7 +16,7 @@ const app = express();
 const logFormat = process.env.NODE_ENV === "development" ? "dev" : "combined";
 app.use(morgan(logFormat));
 
-const whitelist = ["http://localhost:8080", "http://localhost:3000", "http://localhost:5173", process.env.FRONTEND_URL];
+const whitelist = ["http://localhost:8080", "http://localhost:3000", "http://localhost:5173", process.env.CLIENT_URL];
 
 const corsOptions = {
   origin: function (origin, callback) {

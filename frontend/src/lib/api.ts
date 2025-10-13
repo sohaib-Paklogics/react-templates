@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-const TOKEN_KEY = "template-access-token";
+const TOKEN_KEY = import.meta.env.VITE_LOCAL_STORAGE_TOKEN_KEY;
 const API_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5000/api";
 
 const api = axios.create({
