@@ -1,0 +1,3 @@
+export const ENV = {
+  API_BASE_URL: 'http://192.168.0.10:8080/api', // replace with your LAN IP or prod URL
+};

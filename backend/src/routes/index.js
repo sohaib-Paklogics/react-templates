@@ -1,5 +1,5 @@
-import adminRoutes from "../routes/admin.js";
-import userRoutes from "../routes/user.js";
+import adminRoutes from "./admin.routes.js";
+import userRoutes from "./user.routes.js";
 import express from "express";
 
 const router = express.Router();
