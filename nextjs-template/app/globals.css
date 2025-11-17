@@ -1,0 +1,482 @@
+/* --- Tailwind v4 import must come first --- */
+@import "tailwindcss";
+
+
+/* --- Expose theme color tokens so utilities exist (bg-background, text-foreground, etc.) --- */
+@theme {
+  /* radius shortcuts (optional) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Map Tailwind color tokens to your CSS variables */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* If you use these as utilities (bg-chart-1, etc.), keep them */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+}
+
+/* --- Design tokens (your updated palette) --- */
+@layer base {
+  :root {
+    --font-family: var(--font-roboto), sans-serif;
+
+    /* Background / Foreground */
+    --background: hsl(0 0% 96%);
+    /* #f5f5f5 */
+    --background-rgb: 245, 245, 245;
+
+    --foreground: hsl(0 0% 12%);
+    /* ~#1f1f1f */
+    --foreground-rgb: 31, 31, 31;
+
+    --text: var(--foreground);
+    --text-rgb: var(--foreground-rgb);
+
+    --grey: #63636D;
+    --grey-rgb: 99, 99, 109;
+
+    /* Card / Popover */
+    --card: var(--background);
+    --card-rgb: var(--background-rgb);
+    --card-foreground: var(--foreground);
+    --card-foreground-rgb: var(--foreground-rgb);
+
+    --popover: var(--background);
+    --popover-rgb: var(--background-rgb);
+    --popover-foreground: var(--foreground);
+    --popover-foreground-rgb: var(--foreground-rgb);
+
+    /* Primary (Blue #3C65BC) */
+    --primary-300: #6f8ed2;
+    --primary-500: #3C65BC;
+    --primary-700: #2a4c91;
+    --primary: var(--primary-500);
+    --primary-rgb: 60, 101, 188;
+    --primary-foreground: #ffffff;
+    --primary-foreground-rgb: 255, 255, 255;
+
+    /* Secondary (Dark Blue #183A61) */
+    --secondary-300: #4a6484;
+    --secondary-500: #183A61;
+    --secondary-700: #0f243d;
+    --secondary: var(--secondary-500);
+    --secondary-rgb: 24, 58, 97;
+    --secondary-foreground: #ffffff;
+    --secondary-foreground-rgb: 255, 255, 255;
+
+    /* Muted */
+    --muted-300: hsl(97 40% 80%);
+    --muted-500: hsl(97 40% 63%);
+    --muted-700: hsl(97 40% 45%);
+    --muted: var(--muted-500);
+    --muted-rgb: 152, 198, 123;
+    --muted-foreground: var(--foreground);
+    --muted-foreground-rgb: var(--foreground-rgb);
+
+    /* Accent */
+    --accent-300: hsl(97 40% 80%);
+    --accent-500: hsl(97 40% 63%);
+    --accent-700: hsl(97 40% 45%);
+    --accent: var(--accent-500);
+    --accent-rgb: 152, 198, 123;
+    --accent-foreground: var(--foreground);
+    --accent-foreground-rgb: var(--foreground-rgb);
+
+    /* Destructive */
+    --destructive-300: hsl(0 65% 80%);
+    --destructive-500: hsl(0 65% 54%);
+    --destructive-700: hsl(0 65% 38%);
+    --destructive: var(--destructive-500);
+    --destructive-rgb: 214, 61, 61;
+    --destructive-foreground: hsl(0 33% 98%);
+    --destructive-foreground-rgb: 250, 250, 250;
+
+    /* Success */
+    --success-300: hsl(151 49% 75%);
+    --success-500: hsl(151 49% 51%);
+    --success-700: hsl(151 49% 36%);
+    --success: var(--success-500);
+    --success-rgb: 69, 191, 132;
+    --success-foreground: hsl(0 33% 98%);
+    --success-foreground-rgb: 250, 250, 250;
+
+    /* Borders / Inputs / Ring */
+    --border: hsl(0 0% 85%);
+    /* #d9d9d9-ish */
+    --border-rgb: 217, 217, 217;
+
+    --divider: #E0E3EB;
+    --divider-rgb: 224, 227, 235;
+
+    --input: hsl(0 0% 85%);
+    --input-rgb: 217, 217, 217;
+
+    --ring: var(--primary-500);
+    --ring-rgb: var(--primary-rgb);
+
+    /* Charts */
+    --chart-1: var(--primary-500);
+    --chart-1-rgb: var(--primary-rgb);
+    --chart-2: var(--secondary-500);
+    --chart-2-rgb: var(--secondary-rgb);
+    --chart-3: #2e4a6f;
+    --chart-3-rgb: 46, 74, 111;
+    --chart-4: #fab75b;
+    --chart-4-rgb: 250, 183, 91;
+    --chart-5: #ff9e48;
+    --chart-5-rgb: 255, 158, 72;
+
+    /* Misc */
+    --radius: 0.5rem;
+
+    /* Extras you referenced elsewhere */
+    --custom-radius: 1.5625rem;
+    --custom-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5);
+    --font-roboto: "Roboto", sans-serif;
+  }
+}
+
+/* --- Your global/base styles (can use @apply bg-background, etc. now) --- */
+@layer base {
+  * {
+    font-family: var(--font-montserrat), sans-serif !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-family);
+    @apply bg-background text-foreground;
+  }
+
+  .section-padding {
+    @apply px-2 md:px-[72px];
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--muted);
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+  }
+
+  svg:focus,
+  svg *:focus {
+    outline: none !important;
+  }
+}
+
+/* --- Rest of your file unchanged --- */
+
+/* for testmoinal */
+@keyframes testimonial-scroll {
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-testimonial-scroll {
+  animation: testimonial-scroll 20s linear infinite;
+}
+
+.testimonial-card.active {
+  transform: scale(1.03) translateX(-30px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-left-color: var(--secondary);
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .animate-testimonial-scroll {
+    animation: testimonial-scroll 20s linear infinite;
+  }
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 15s linear infinite;
+}
+
+/* ======= Headings ======= */
+.text-heading1-bold {
+  font-size: 62px;
+  line-height: 68px;
+  font-weight: 700;
+}
+
+.text-heading1-semibold {
+  font-size: 62px;
+  line-height: 68px;
+  font-weight: 600;
+}
+
+.text-heading2-bold {
+  font-size: 56px;
+  line-height: 61px;
+  font-weight: 700;
+}
+
+.text-heading2-semibold {
+  font-size: 56px;
+  line-height: 61px;
+  font-weight: 600;
+}
+
+.text-heading3-bold {
+  font-size: 36px;
+  line-height: 56px;
+  font-weight: 700;
+}
+
+.text-heading4-medium {
+  font-size: 24px;
+  line-height: 50px;
+  font-weight: 500;
+}
+
+/* ======= Body Text ======= */
+.text-body-bold {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.text-body-semibold {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+}
+
+.text-body-medium {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 500;
+}
+
+.text-body-normal {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 400;
+}
+
+/* ======= Base Text ======= */
+.text-base-regular {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 400;
+}
+
+.text-base-medium {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 500;
+}
+
+.text-base-semibold {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: 600;
+}
+
+/* ======= Small Text ======= */
+.text-small-regular {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.text-small-medium {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.text-small-semibold {
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+/* ======= Subtle Text ======= */
+.text-subtle-medium {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+}
+
+.text-subtle-semibold {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+/* ======= Tiny & Extra Small Text ======= */
+.text-tiny-medium {
+  font-size: 10px;
+  line-height: 140%;
+  font-weight: 500;
+}
+
+.text-x-small-semibold {
+  font-size: 7px;
+  line-height: 9.318px;
+  font-weight: 600;
+}
+
+/* ======= Responsive Font Sizes ======= */
+@media (max-width: 1024px) {
+
+  .text-heading1-bold,
+  .text-heading1-semibold {
+    font-size: 56px;
+    line-height: 64px;
+  }
+
+  .text-heading2-bold,
+  .text-heading2-semibold {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .text-heading3-bold {
+    font-size: 36px;
+    line-height: 48px;
+  }
+
+  .text-heading4-medium {
+    font-size: 24px;
+    line-height: 44px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .text-heading1-bold,
+  .text-heading1-semibold {
+    font-size: 48px;
+    line-height: 56px;
+  }
+
+  .text-heading2-bold,
+  .text-heading2-semibold {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .text-heading3-bold {
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .text-heading4-medium {
+    font-size: 24px;
+    line-height: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .text-heading1-bold,
+  .text-heading1-semibold {
+    font-size: 40px;
+    line-height: 48px;
+  }
+
+  .text-heading2-bold,
+  .text-heading2-semibold {
+    font-size: 36px;
+    line-height: 44px;
+  }
+
+  .text-heading3-bold {
+    font-size: 30px;
+    line-height: 40px;
+  }
+
+  .text-heading4-medium {
+    font-size: 20px;
+    line-height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .text-heading1-bold,
+  .text-heading1-semibold {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .text-heading2-bold,
+  .text-heading2-semibold {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .text-heading3-bold {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .text-heading4-medium {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
