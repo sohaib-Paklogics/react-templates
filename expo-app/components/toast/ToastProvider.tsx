@@ -1,6 +1,7 @@
 import { AppText } from "@/components/ui/AppText";
 import { useTheme } from "@/providers/ThemeProvider";
-import React, { createContext, useContext, useMemo, useRef, useState } from "react";
+import { registerToast } from "@/providers/toast";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Animated, Pressable, StyleSheet } from "react-native";
 
 type ToastType = "success" | "error" | "info";
@@ -33,16 +34,26 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   };
 
   const hide = (id: string) => {
-    setToasts((prev) => prev.filter((x) => x.id !== id));
-    if (toasts.length <= 1) {
-      Animated.parallel([
-        Animated.timing(opacity, { toValue: 0, duration: 180, useNativeDriver: true }),
-        Animated.timing(y, { toValue: -30, duration: 200, useNativeDriver: true }),
-      ]).start();
-    }
+    setToasts((prev) => {
+      const next = prev.filter((x) => x.id !== id);
+      if (next.length === 0) {
+        Animated.parallel([
+          Animated.timing(opacity, { toValue: 0, duration: 180, useNativeDriver: true }),
+          Animated.timing(y, { toValue: -30, duration: 200, useNativeDriver: true }),
+        ]).start();
+      }
+      return next;
+    });
   };
 
   const value = useMemo(() => ({ show, hide }), []);
+
+  // Register an imperative toast API for interceptors/services (no hooks there).
+  useEffect(() => {
+    registerToast({
+      show: ({ type, title, message }) => show({ type, title, message }),
+    });
+  }, []);
 
   const palette = {
     success: { bg: "rgba(46,204,113,0.18)", border: "rgba(46,204,113,0.35)", text: theme.colors.text },

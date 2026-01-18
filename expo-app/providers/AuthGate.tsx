@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { useAuthBootstrap } from "../hooks/useAuthBootstrap";
 import { useAuthStore } from "../store/auth.store";
 import { useMeQuery } from "../queries/auth/useMeQuery";
+import { FullscreenLoader } from "@/components/overlays/FullscreenLoader";
 
 // This is the RN equivalent of ProtectedLayout.
 // It keeps navigation decisions OUT of axios interceptors.
@@ -33,10 +34,9 @@ export function AuthGate({ children }: PropsWithChildren) {
     }
   }, [booted, token, isError, router]);
 
-  // While bootstrapping or validating /me, keep the current route but show children.
-  // In most apps you'd show a loader screen here.
-  if (!booted) return null;
-  if (token && isLoading) return null;
+  // While bootstrapping or validating /me, keep the current route but show a loader.
+  if (!booted) return <FullscreenLoader visible text="Bootstrapping..." />;
+  if (token && isLoading) return <FullscreenLoader visible text="Checking session..." />;
 
   return <>{children}</>;
 }

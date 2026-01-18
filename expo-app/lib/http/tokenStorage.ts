@@ -1,15 +1,14 @@
 import * as SecureStore from "expo-secure-store";
-
-const ACCESS_TOKEN_KEY = "access_token";
+import { env } from "@/config/env";
 
 export const tokenStorage = {
   async getAccessToken(): Promise<string | null> {
-    return SecureStore.getItemAsync(ACCESS_TOKEN_KEY);
+    return SecureStore.getItemAsync(env.AUTH_TOKEN_KEY);
   },
   async setAccessToken(token: string): Promise<void> {
-    await SecureStore.setItemAsync(ACCESS_TOKEN_KEY, token);
+    await SecureStore.setItemAsync(env.AUTH_TOKEN_KEY, token);
   },
   async clearAccessToken(): Promise<void> {
-    await SecureStore.deleteItemAsync(ACCESS_TOKEN_KEY);
+    await SecureStore.deleteItemAsync(env.AUTH_TOKEN_KEY);
   },
 };
