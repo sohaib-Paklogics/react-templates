@@ -1,4 +1,4 @@
-﻿import { create } from "zustand";
+import { create } from "zustand";
 import { tokenStorage } from "@/services/http/tokenStorage";
 import type { AuthUser } from "@/shared/types/auth";
 

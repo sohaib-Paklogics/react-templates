@@ -1,4 +1,4 @@
-﻿import { STORAGE_KEYS } from "@/shared/constants/storageKeys";
+import { STORAGE_KEYS } from "@/shared/constants/storageKeys";
 
 export const tokenStorage = {
   getAccessToken(): string | null {

@@ -1,4 +1,4 @@
-﻿import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { ROUTES } from "@/shared/constants/routes";
 
 import PublicLayout from "@/layouts/PublicLayout";

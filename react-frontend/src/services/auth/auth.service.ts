@@ -1,4 +1,4 @@
-﻿import { apiClient } from "@/services/http/apiClient";
+import { apiClient } from "@/services/http/apiClient";
 import type { AuthTokenResponse, AuthUser } from "@/shared/types/auth";
 
 export const authService = {

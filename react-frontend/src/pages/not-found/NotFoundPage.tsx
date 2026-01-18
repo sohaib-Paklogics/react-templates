@@ -1,4 +1,4 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ROUTES } from "@/shared/constants/routes";
 
 export default function NotFoundPage() {

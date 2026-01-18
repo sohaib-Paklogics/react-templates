@@ -1,9 +1,10 @@
-﻿import axios from "axios";
+import axios from "axios";
 import { toast } from "sonner";
 import { env } from "@/app/config/env";
 import { tokenStorage } from "./tokenStorage";
 import { mapAxiosError } from "./errorMapper";
 import { ROUTES } from "@/shared/constants/routes";
+import { HTTP_HEADERS } from "@/shared/constants/httpHeaders";
 import type { ApiError } from "@/shared/types/api";
 
 export const apiClient = axios.create({
@@ -28,8 +29,13 @@ apiClient.interceptors.response.use(
   (err) => {
     const apiError: ApiError = mapAxiosError(err);
 
-    // Global toast for ALL API errors
-    toast.error(apiError.message);
+    // Global toast for ALL API errors by default.
+    // You can suppress a toast for specific calls via:
+    // apiClient.get(url, { headers: { "x-suppress-toast": "1" } })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const headers = (err?.config?.headers ?? {}) as any;
+    const suppressToast = headers[HTTP_HEADERS.SUPPRESS_TOAST] === "1";
+    if (!suppressToast) toast.error(apiError.message);
 
     if (apiError.status === 401) {
       tokenStorage.clearAccessToken();

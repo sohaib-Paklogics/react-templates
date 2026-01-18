@@ -1,4 +1,4 @@
-﻿import { apiClient } from "@/services/http/apiClient";
+import { apiClient } from "@/services/http/apiClient";
 import type { User } from "@/shared/types/user";
 
 export const usersService = {

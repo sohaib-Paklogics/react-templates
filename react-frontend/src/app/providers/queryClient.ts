@@ -1,4 +1,4 @@
-﻿import { QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import type { ApiError } from "@/shared/types/api";
 
 export const queryClient = new QueryClient({

@@ -1,4 +1,4 @@
-﻿import type { AxiosError } from "axios";
+import type { AxiosError } from "axios";
 import type { ApiError } from "@/shared/types/api";
 
 function safeString(v: unknown): string | undefined {
